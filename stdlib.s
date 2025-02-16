@@ -17,7 +17,7 @@ _bzero
 		MOVGT	R3, #0x0	; store 0 byte to R3
 		MOVLE	pc, lr		; return if R1 <= 0
 
-; loop entered if R1 >= 0
+; loop entered if R1 > 0
 _bzero_loop
 		STRB	R3, [R0], #1	; store 0 byte into R0 pointer and increment
 		SUBS	R1, R1, #1		; sub counter by 1
@@ -25,23 +25,49 @@ _bzero_loop
 		
 		POP		{R3}			; restore R3 if counter == 0
 		MOV		PC, LR			; return when counter == 0
-		
-		
-		
-		
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; char* _strncpy( char* dest, char* src, int size )
 ; Parameters
-;   	dest 	- pointer to the buffer to copy to
-;	src	- pointer to the zero-terminated string to copy from
-;	size	- a total of n bytes
+;   	dest 	- pointer to the buffer to copy to (R0)
+;	src	- pointer to the zero-terminated string to copy from (R1)
+;	size	- a total of n bytes (R2)
 ; Return value
 ;   dest
 		EXPORT	_strncpy
 _strncpy
 		; implement your complete logic, including stack operations
-		MOV		pc, lr
+		CMP		R2, #0	; r2 corresponds to size
+		IT		LE
+		MOVLE	pc, lr ; return if size <= 0, R0 already set to return value
+		
+		PUSH 	{R3-R6}	; save R3 and R4, R3 = return value, R4 = temp buffer for chars, R5 = checking dest null terminator, R6 = reached end of src flag
+		MOV 	R3, R0	; store beginning of dest to return later		
+		MOV		R4, #0	; init registers
+		MOV		R5, #0
+		MOV		R6, #0
+		
+_strncpy_loop
+		CMP		R6, #1			
+		LDRBNE	R4, [R1], #1	; load char from src if have not reached the end
+		
+		CMP		R4, #0x0		; dest will be padded with zeroes if src has reached end, stop reading from src
+		MOVEQ	R6, #1			; set stop reading flag
+
+		STRB	R4, [R0], #1	; store char into dst even if overwriting null terminator or going out of bounds
+		
+		SUB		R2, R2, #1		; subtract counter
+		
+		CMP		R2, #0			; return if counter == 0
+		BEQ		_strncpy_done
+
+		B		_strncpy_loop
+
+_strncpy_done
+		MOV		R0, R3			; change dest pointer back to the beginning
+		POP		{R3-R6}			; restore registers
+		MOV		PC, LR			; return
+		
 		
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; void* _malloc( int size )
