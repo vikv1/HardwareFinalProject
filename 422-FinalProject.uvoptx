@@ -242,8 +242,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\stdlib.s</PathWithFileName>
-      <FilenameWithoutPath>stdlib.s</FilenameWithoutPath>
+      <PathWithFileName>.\svc.s</PathWithFileName>
+      <FilenameWithoutPath>svc.s</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -254,8 +254,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\svc.s</PathWithFileName>
-      <FilenameWithoutPath>svc.s</FilenameWithoutPath>
+      <PathWithFileName>.\timer.s</PathWithFileName>
+      <FilenameWithoutPath>timer.s</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -266,8 +266,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\timer.s</PathWithFileName>
-      <FilenameWithoutPath>timer.s</FilenameWithoutPath>
+      <PathWithFileName>.\stdlib.s</PathWithFileName>
+      <FilenameWithoutPath>stdlib.s</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

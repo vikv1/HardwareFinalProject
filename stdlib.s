@@ -4,14 +4,31 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; void _bzero( void *s, int n )
 ; Parameters
-;	s 		- pointer to the memory location to zero-initialize
-;	n		- a number of bytes to zero-initialize
+;	s 		- pointer to the memory location to zero-initialize (R0)
+;	n		- a number of bytes to zero-initialize (R1)
 ; Return value
 ;   none
 		EXPORT	_bzero
 _bzero
 		; implement your complete logic, including stack operations
-		MOV		pc, lr	
+		CMP		R1, #0	
+		ITTE	GT			; check if R1 greater than 0
+		PUSHGT	{R3}		; save whatever is in R3
+		MOVGT	R3, #0x0	; store 0 byte to R3
+		MOVLE	pc, lr		; return if R1 <= 0
+
+; loop entered if R1 >= 0
+_bzero_loop
+		STRB	R3, [R0], #1	; store 0 byte into R0 pointer and increment
+		SUBS	R1, R1, #1		; sub counter by 1
+		BNE		_bzero_loop
+		
+		POP		{R3}			; restore R3 if counter == 0
+		MOV		PC, LR			; return when counter == 0
+		
+		
+		
+		
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; char* _strncpy( char* dest, char* src, int size )

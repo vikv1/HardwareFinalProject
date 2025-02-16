@@ -10,6 +10,7 @@
       <TargetName>Target_1</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
+      <pCCUsed>6220000::V6.22::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -409,11 +410,6 @@
               <FilePath>.\heap.s</FilePath>
             </File>
             <File>
-              <FileName>stdlib.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>.\stdlib.s</FilePath>
-            </File>
-            <File>
               <FileName>svc.s</FileName>
               <FileType>2</FileType>
               <FilePath>.\svc.s</FilePath>
@@ -422,6 +418,11 @@
               <FileName>timer.s</FileName>
               <FileType>2</FileType>
               <FilePath>.\timer.s</FilePath>
+            </File>
+            <File>
+              <FileName>stdlib.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\stdlib.s</FilePath>
             </File>
           </Files>
         </Group>

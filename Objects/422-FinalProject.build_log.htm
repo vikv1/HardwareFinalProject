@@ -29,11 +29,10 @@ Project File Date:  02/16/2025
 Rebuild target 'Target_1'
 Note: source file '.\heap.s' - object file renamed from '.\Objects\heap.o' to '.\Objects\heap_1.o'.
 Note: source file '.\heap.s' - object file renamed from '.\Objects\heap.o' to '.\Objects\heap_1.o'.
-driver_cpg.c(15): error: 'unistd.h' file not found
-   15 | #include <unistd.h>  // alarm
-      |          ^~~~~~~~~~
-1 error generated.
-compiling driver_cpg.c...
+assembling heap.s...
+compiling system_TM4C129.c...
+assembling svc.s...
+assembling timer.s...
 driver.c(9): error: 'unistd.h' file not found
     9 | #include <unistd.h>  // alarm
       |          ^~~~~~~~~~
@@ -43,11 +42,6 @@ compiling driver.c...
    58 00001200 __initial_sp
 1 Error, 0 Warnings
 assembling startup_TM4C129.s...
-assembling timer.s...
-assembling heap.s...
-assembling svc.s...
-assembling stdlib.s...
-compiling system_TM4C129.c...
 heap.c(70): warning: unused parameter 'size' [-Wunused-parameter]
    70 | void *_ralloc( int size, int left, int right ) {
       |                    ^
@@ -67,6 +61,12 @@ driver_keil.c(17): warning: unused parameter 'signum' [-Wunused-parameter]
       |                        ^
 2 warnings generated.
 compiling driver_keil.c...
+assembling stdlib.s...
+driver_cpg.c(15): error: 'unistd.h' file not found
+   15 | #include <unistd.h>  // alarm
+      |          ^~~~~~~~~~
+1 error generated.
+compiling driver_cpg.c...
 ".\Objects\422-FinalProject.axf" - 2 Error(s), 5 Warning(s).
 
 <h2>Software Packages used:</h2>
@@ -97,7 +97,7 @@ Package Vendor: Keil
       Source file:   Device/Source/system_TM4C129.c
       Source file:   Device/Source/ARM/startup_TM4C129.s
 Target not created.
-Build Time Elapsed:  00:00:01
+Build Time Elapsed:  00:00:00
 </pre>
 </body>
 </html>
