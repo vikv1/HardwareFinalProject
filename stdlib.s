@@ -56,12 +56,9 @@ _strncpy_loop
 
 		STRB	R4, [R0], #1	; store char into dst even if overwriting null terminator or going out of bounds
 		
-		SUB		R2, R2, #1		; subtract counter
+		SUBS	R2, R2, #1		; subtract counter
 		
-		CMP		R2, #0			; return if counter == 0
-		BEQ		_strncpy_done
-
-		B		_strncpy_loop
+		BNE		_strncpy_loop	; loop if counter not 0
 
 _strncpy_done
 		MOV		R0, R3			; change dest pointer back to the beginning
@@ -78,9 +75,14 @@ _strncpy_done
 		EXPORT	_malloc
 _malloc
 		; save registers
+		PUSH 	{R7, LR} ; push prev R7 and return address to main
+			
+		MOV		R7, #0x4	
 		; set the system call # to R7
-	        SVC     #0x0
+	    SVC     #0x4
+		 
 		; resume registers
+		POP 	{R7, LR}	; back to main
 		MOV		pc, lr
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -108,9 +110,14 @@ _free
 		EXPORT	_alarm
 _alarm
 		; save registers
+		PUSH	{R7, LR}
+		
+		MOV		R7, #0x1
 		; set the system call # to R7
-        	SVC     #0x0
+        SVC     #0x1
+		
 		; resume registers	
+		POP		{R7, LR}
 		MOV		pc, lr		
 			
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -124,9 +131,14 @@ _alarm
 		EXPORT	_signal
 _signal
 		; save registers
+		PUSH	{R7, LR}
+		
+		MOV		R7, #0x2
 		; set the system call # to R7
-        	SVC     #0x0
+        SVC     #0x2
+		
 		; resume registers
+		POP		{R7, LR}
 		MOV		pc, lr	
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

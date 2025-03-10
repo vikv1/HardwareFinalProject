@@ -8,6 +8,9 @@ extern unsigned int _alarm( unsigned int );
 
 #define SIG_ALRM 14
 
+#include <stdio.h>
+
+int placeholder = 0;
 int* alarmed;
 
 void sig_handler1( int signum ) {
@@ -45,19 +48,20 @@ int main( ) {
 	// uncomment later !!
 	
 //	alarmed = (int *)_malloc( 4 );
-//	*alarmed = 1;
-//	_signal( SIG_ALRM, sig_handler1 );
-//	_alarm( 2 );
-//	while ( *alarmed != 2 ) {
-//		void* mem9 = _malloc( 4 );	
-//		_free( mem9 );		
-//	}
-//	
-//	_signal( SIG_ALRM, sig_handler2 );
-//	_alarm( 3 );
-//	while ( *alarmed != 3 ) {
-//		void* mem9 = _malloc( 4 );	
-//		_free( mem9 );
-//	}
+	alarmed = &placeholder;
+	*alarmed = 1;
+	_signal( SIG_ALRM, sig_handler1 );
+	_alarm( 2 );
+	while ( *alarmed != 2 ) {
+		void* mem9 = _malloc( 4 );	
+		_free( mem9 );		
+	}
+	
+	_signal( SIG_ALRM, sig_handler2 );
+	_alarm( 3 );
+	while ( *alarmed != 3 ) {
+		void* mem9 = _malloc( 4 );	
+		_free( mem9 );
+	}
 	return 0;
 }

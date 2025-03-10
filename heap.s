@@ -15,12 +15,20 @@ MCB_TOTAL	EQU		512			; 2^9 = 512 entries
 	
 INVALID		EQU		-1			; an invalid id
 	
+END_OF_LOOP	EQU		0x20006C00
+	
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Memory Control Block Initialization
 		EXPORT	_heap_init
 _heap_init
 	;; Implement by yourself
-	
+		PUSH	{R1-R2}
+		MOV		R1, #MAX_SIZE
+		LDR		R2, =MCB_TOP
+		
+		STR		R1, [R2]	; store max size at mcb top
+		
+		POP		{R1, R2}
 		MOV		pc, lr
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -29,8 +37,17 @@ _heap_init
 		EXPORT	_kalloc
 _kalloc
 	;; Implement by yourself
-		MOV		pc, lr
+		CMP		R0, #32
+		IT		LT
+		MOVLT	R0, #32		; set r0 to 32 if initial size is smaller
 		
+		PUSH 	{R1-R2}	; store prev values to restore later
+		LDR		R1, =MCB_TOP	; left
+		LDR		R2, =MCB_BOT	; right
+		POP		{R1-R2}
+		BX		LR
+		
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Kernel Memory De-allocation
 ; void free( void *ptr )
